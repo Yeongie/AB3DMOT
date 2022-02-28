@@ -180,6 +180,4 @@ def box3doverlap(aa, bb, criterion='union'):
 	bb_3d = compute_box_3d(bb)
 
 	iou3d, iou2d = box3d_iou(aa_3d, bb_3d, criterion=criterion)
-	# print(iou3d)
-	# print(iou2d)
 	return iou3d
