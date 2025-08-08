@@ -11,6 +11,11 @@ try:
 except:
     from collections import OrderedDict # only included from python 2.7 on
 
+# Add parent directories to Python path for imports
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.join(current_dir, '../../')
+sys.path.insert(0, root_dir)
+
 import mailpy
 from AB3DMOT_libs.dist_metrics import iou
 

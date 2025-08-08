@@ -1,0 +1,4 @@
+frame,track_id,object_type,truncated,occluded,alpha,bbox_left,bbox_top,bbox_right,bbox_bottom,height_3d,width_3d,length_3d,x_3d,y_3d,z_3d,rotation_y,confidence_score
+0,1,Car,0,0,-1.0,0.0,100.0,100.0,200.0,1.5,1.8,4.0,0.0,-1.5,25.0,0.2,0.8
+0,2,Pedestrian,0,0,-1.0,50.0,100.0,150.0,200.0,1.5,1.8,4.0,5.0,-1.5,26.0,0.2,0.8500000000000001
+0,3,Cyclist,0,0,-1.0,100.0,100.0,200.0,200.0,1.5,1.8,4.0,10.0,-1.5,27.0,0.2,0.9

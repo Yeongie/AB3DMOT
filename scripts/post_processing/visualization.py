@@ -2,6 +2,12 @@
 # email: xinshuo.weng@gmail.com
 
 import os, numpy as np, sys, argparse
+
+# Add parent directories to Python path for imports
+current_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.join(current_dir, '../../')
+sys.path.insert(0, root_dir)
+
 from AB3DMOT_libs.kitti_calib import Calibration
 from AB3DMOT_libs.kitti_obj import read_label
 from AB3DMOT_libs.utils import get_subfolder_seq, get_threshold

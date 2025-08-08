@@ -6,6 +6,7 @@ import matplotlib; matplotlib.use('Agg')
 import os, numpy as np, time, sys, argparse
 from AB3DMOT_libs.utils import Config, get_subfolder_seq, initialize
 from AB3DMOT_libs.io import load_detection, get_saving_dir, get_frame_det, save_results, save_affinity
+from AB3DMOT_libs.csv_export import CSVExporter
 from scripts.post_processing.combine_trk_cat import combine_trk_cat
 from xinshuo_io import mkdir_if_missing, save_txt_file
 from xinshuo_miscellaneous import get_timestring, print_log
@@ -15,6 +16,7 @@ def parse_args():
     parser.add_argument('--dataset', type=str, default='nuScenes', help='KITTI, nuScenes')
     parser.add_argument('--split', type=str, default='', help='train, val, test')
     parser.add_argument('--det_name', type=str, default='', help='pointrcnn')
+    parser.add_argument('--export_csv', action='store_true', help='Export tracking results to CSV format')
     args = parser.parse_args()
     return args
 
@@ -46,6 +48,12 @@ def main_per_cat(cfg, cat, log, ID_start):
 
 		# initialize tracker
 		tracker, frame_list = initialize(cfg, trk_root, save_dir, subfolder, seq_name, cat, ID_start, hw, log)
+		
+		# initialize CSV exporter if CSV export is enabled
+		csv_exporter = None
+		if cfg.export_csv:
+			csv_exporter = CSVExporter(save_dir, cfg.num_hypo)
+			csv_exporter.init_sequence_files(seq_name)
 
 		# loop over frame
 		min_frame, max_frame = int(frame_list[0]), int(frame_list[-1])
@@ -87,6 +95,9 @@ def main_per_cat(cfg, cat, log, ID_start):
 				for result_tmp in results[hypo]:				# N x 15
 					save_results(result_tmp, save_trk_file, eval_file_dict[hypo], \
 						det_id2str, frame, cfg.score_threshold)
+					# Also save to CSV if enabled
+					if csv_exporter:
+						csv_exporter.export_result(result_tmp, hypo, det_id2str, frame, cfg.score_threshold)
 				save_trk_file.close()
 
 			total_frames += 1
@@ -95,6 +106,12 @@ def main_per_cat(cfg, cat, log, ID_start):
 		for index in range(cfg.num_hypo): 
 			eval_file_dict[index].close()
 			ID_start = max(ID_start, tracker.ID_count[index])
+		
+		# close CSV files if CSV export was enabled
+		if csv_exporter:
+			csv_exporter.close_files()
+			# Print CSV export summary
+			print_log(csv_exporter.get_export_summary(seq_name), log=log)
 
 	print_log('%s, %25s: %4.f seconds for %5d frames or %6.1f FPS, metric is %s = %.2f' % \
 		(cfg.dataset, result_sha, total_time, total_frames, total_frames / total_time, \
@@ -109,8 +126,9 @@ def main(args):
 	cfg, settings_show = Config(config_path)
 
 	# overwrite split and detection method
-	if args.split is not '': cfg.split = args.split
-	if args.det_name is not '': cfg.det_name = args.det_name
+	if args.split != '': cfg.split = args.split
+	if args.det_name != '': cfg.det_name = args.det_name
+	cfg.export_csv = args.export_csv
 
 	# print configs
 	time_str = get_timestring()

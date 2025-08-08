@@ -88,11 +88,34 @@ class Calibration(object):
         Ref: https://github.com/utiasSTARS/pykitti/blob/master/pykitti/utils.py
         '''
         data = {}
+        
+        # Mapping from file parameter names to expected dictionary keys
+        param_mapping = {
+            'R_rect': 'R0_rect',
+            'Tr_velo_cam': 'Tr_velo_to_cam',
+            'Tr_imu_velo': 'Tr_imu_to_velo'
+        }
+        
         with open(filepath, 'r') as f:
             for line in f.readlines():
                 line = line.rstrip()
                 if len(line)==0: continue
-                key, value = line.split(':', 1)
+                
+                # Handle both formats: "key: value" and "key value" (without colon)
+                if ':' in line:
+                    key, value = line.split(':', 1)
+                else:
+                    # Split on first space for lines without colons
+                    parts = line.split(' ', 1)
+                    if len(parts) == 2:
+                        key, value = parts
+                    else:
+                        continue  # Skip malformed lines
+                
+                # Map parameter names to expected dictionary keys
+                if key in param_mapping:
+                    key = param_mapping[key]
+                
                 # The only non-float values in these files are dates, which
                 # we don't care about anyway
                 try:
