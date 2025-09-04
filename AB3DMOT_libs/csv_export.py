@@ -3,12 +3,16 @@
 
 import os
 import csv
+import numpy as np
 from typing import Dict, TextIO, Any
 
 class CSVExporter:
     """
     Dedicated class for exporting AB3DMOT tracking results to CSV format.
     Keeps CSV functionality organized and separate from core tracking logic.
+    
+    Automatically normalizes PointRCNN confidence scores from raw logits to 0.0-1.0 probabilities
+    using sigmoid transformation, which is the standard practice for neural network confidence scores.
     """
     
     def __init__(self, save_dir: str, num_hypo: int = 1):
@@ -23,6 +27,25 @@ class CSVExporter:
         self.num_hypo = num_hypo
         self.csv_files: Dict[int, TextIO] = {}
         self.csv_writers: Dict[int, csv.writer] = {}
+    
+    @staticmethod
+    def normalize_confidence_score(raw_confidence: float) -> float:
+        """
+        Normalize PointRCNN confidence score from raw logit to 0.0-1.0 probability.
+        
+        Uses sigmoid transformation: P = 1 / (1 + exp(-logit))
+        This is the standard method for converting neural network logits to probabilities.
+        
+        Args:
+            raw_confidence: Raw PointRCNN confidence score (logit, unbounded)
+            
+        Returns:
+            Normalized confidence score in [0.0, 1.0] range
+        """
+        # Clip extreme values to prevent numerical overflow
+        clipped_confidence = np.clip(raw_confidence, -50, 50)
+        # Apply sigmoid transformation
+        return float(1 / (1 + np.exp(-clipped_confidence)))
         
     def get_csv_header(self) -> list:
         """
@@ -32,24 +55,25 @@ class CSVExporter:
             List of column names for CSV header
         """
         return [
-            'frame',           # Frame number in sequence
-            'track_id',        # Unique tracking ID
-            'object_type',     # Car, Pedestrian, Cyclist
-            'truncated',       # Object truncation flag (0/1)
-            'occluded',        # Object occlusion level (0-3)
-            'alpha',           # Observation angle of object
-            'bbox_left',       # 2D bounding box left coordinate
-            'bbox_top',        # 2D bounding box top coordinate  
-            'bbox_right',      # 2D bounding box right coordinate
-            'bbox_bottom',     # 2D bounding box bottom coordinate
-            'height_3d',       # 3D object height (meters)
-            'width_3d',        # 3D object width (meters)
-            'length_3d',       # 3D object length (meters)
-            'x_3d',            # 3D position X in camera coordinates
-            'y_3d',            # 3D position Y in camera coordinates
-            'z_3d',            # 3D position Z in camera coordinates
-            'rotation_y',      # 3D rotation around Y-axis (radians)
-            'confidence_score' # Detection/tracking confidence (0.0-1.0)
+            'frame',                    # Frame number in sequence
+            'track_id',                 # Unique tracking ID
+            'object_type',              # Car, Pedestrian, Cyclist
+            'truncated',                # Object truncation flag (0/1)
+            'occluded',                 # Object occlusion level (0-3)
+            'alpha',                    # Observation angle of object
+            'bbox_left',                # 2D bounding box left coordinate
+            'bbox_top',                 # 2D bounding box top coordinate  
+            'bbox_right',               # 2D bounding box right coordinate
+            'bbox_bottom',              # 2D bounding box bottom coordinate
+            'height_3d',                # 3D object height (meters)
+            'width_3d',                 # 3D object width (meters)
+            'length_3d',                # 3D object length (meters)
+            'x_3d',                     # 3D position X in camera coordinates
+            'y_3d',                     # 3D position Y in camera coordinates
+            'z_3d',                     # 3D position Z in camera coordinates
+            'rotation_y',               # 3D rotation around Y-axis (radians)
+            'confidence_score_raw',     # Raw PointRCNN confidence (logit, unbounded)
+            'confidence_score'          # Normalized confidence (0.0-1.0 probability)
         ]
     
     def init_sequence_files(self, seq_name: str) -> None:
@@ -100,10 +124,13 @@ class CSVExporter:
         ori_tmp = result_data[8]          # Observation angle (alpha)  
         type_tmp = det_id2str[result_data[9]]  # Object type string
         bbox2d_tmp = result_data[10:14]   # 2D bounding box [left, top, right, bottom]
-        conf_tmp = result_data[14]        # Confidence score
+        conf_raw = result_data[14]        # Raw PointRCNN confidence score (logit)
         
-        # Only export results above confidence threshold
-        if conf_tmp >= score_threshold:
+        # Normalize confidence score from logit to 0.0-1.0 probability
+        conf_normalized = self.normalize_confidence_score(conf_raw)
+        
+        # Only export results above confidence threshold (using raw score for threshold)
+        if conf_raw >= score_threshold:
             csv_row = [
                 frame,                    # frame
                 int(id_tmp),             # track_id  
@@ -122,7 +149,8 @@ class CSVExporter:
                 bbox3d_tmp[4],           # y_3d
                 bbox3d_tmp[5],           # z_3d
                 bbox3d_tmp[6],           # rotation_y
-                conf_tmp                 # confidence_score
+                conf_raw,                # confidence_score_raw (original logit)
+                conf_normalized          # confidence_score (0.0-1.0 probability)
             ]
             
             self.csv_writers[hypo].writerow(csv_row)
