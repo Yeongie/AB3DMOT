@@ -23,9 +23,10 @@ def print_log(print_str, log, same_line=False, display=True):
 		if same_line: print('{}'.format(print_str), end='')
 		else: print('{}'.format(print_str))
 
-	if same_line: log.write('{}'.format(print_str))
-	else: log.write('{}\n'.format(print_str))
-	log.flush()
+	if log is not None:
+		if same_line: log.write('{}'.format(print_str))
+		else: log.write('{}\n'.format(print_str))
+		log.flush()
 
 def print_confusion_matrix(confusion_matrix, class_names, log, fmt='%10d', sum_col=True, display=True):
     '''

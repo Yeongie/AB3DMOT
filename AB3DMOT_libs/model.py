@@ -103,13 +103,13 @@ class AB3DMOT(object):
 		elif self.metric in ['giou_2d', 'giou_3d']: 	   self.max_sim, self.min_sim = 1.0, -1.0
 
 	def print_param(self):
-		print_log('\n\n***************** Parameters for %s *********************' % self.cat, log=self.log, display=False)
-		print_log('matching algorithm is %s' % self.algm, log=self.log, display=False)
-		print_log('distance metric is %s' % self.metric, log=self.log, display=False)
-		print_log('distance threshold is %f' % self.thres, log=self.log, display=False)
-		print_log('min hits is %f' % self.min_hits, log=self.log, display=False)
-		print_log('max age is %f' % self.max_age, log=self.log, display=False)
-		print_log('ego motion compensation is %d' % self.ego_com, log=self.log, display=False)
+		print_log('\n\n***************** Parameters for %s *********************' % self.cat, log=self.log, display=True)
+		print_log('matching algorithm is %s' % self.algm, log=self.log, display=True)
+		print_log('distance metric is %s' % self.metric, log=self.log, display=True)
+		print_log('distance threshold is %f' % self.thres, log=self.log, display=True)
+		print_log('min hits is %f' % self.min_hits, log=self.log, display=True)
+		print_log('max age is %f' % self.max_age, log=self.log, display=True)
+		print_log('ego motion compensation is %d' % self.ego_com, log=self.log, display=True)
 
 	def process_dets(self, dets):
 		# convert each detection into the class Box3D 

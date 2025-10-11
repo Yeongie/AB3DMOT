@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RTMapsDiagram version="4.8.0" EngineVersion="4.10" xmlns="http://schemas.intempora.com/RTMaps/2011/RTMapsFiles" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.intempora.com/RTMaps/2011/RTMapsFiles http://www.intempora.com/schemas/RTMaps/2011/RTMapsDiagram.xsd">
+  <RequiredPackages>
+    <File Version="4.3.1"><![CDATA[C:/Program Files/Intempora/RTMaps 4/packages/rtmaps_python_bridge/rtmaps_python_bridge.pck]]><Relative><![CDATA[%RTMAPS_INSTDIR%/packages/rtmaps_python_bridge/rtmaps_python_bridge.pck]]></Relative></File>
+  </RequiredPackages>
+  <EngineProperties>
+    <Property LongName="Engine.startTimespeed" Type="1">1000</Property>
+    <Property LongName="Engine.startTime" Type="1">0</Property>
+    <Property LongName="Engine.session" Type="3"><![CDATA[unspecified]]></Property>
+    <Property LongName="Engine.recordingAtStart" Type="0">true</Property>
+    <Property LongName="Engine.recording" Type="0">true</Property>
+    <Property LongName="Engine.sequentialStart" Type="0">false</Property>
+    <Property LongName="Engine.autoStart" Type="0">true</Property>
+  </EngineProperties>
+  <Component InstanceName="AB3DMOT_Tracker" Model="PythonBridge" Version="4.3.1" x="400" y="200" z="0">
+    <Input LongName="AB3DMOT_Tracker.detections" Name="detections">
+      <Property LongName="AB3DMOT_Tracker.detections.readerType" Type="1">0</Property>
+      <Property LongName="AB3DMOT_Tracker.detections.subsampling" Type="1">1</Property>
+    </Input>
+    <Input LongName="AB3DMOT_Tracker.frame_idx" Name="frame_idx">
+      <Property LongName="AB3DMOT_Tracker.frame_idx.readerType" Type="1">0</Property>
+      <Property LongName="AB3DMOT_Tracker.frame_idx.subsampling" Type="1">1</Property>
+    </Input>
+    <Output LongName="AB3DMOT_Tracker.tracks" Name="tracks">
+      <Property LongName="AB3DMOT_Tracker.tracks.subsampling" Type="1">1</Property>
+      <Property LongName="AB3DMOT_Tracker.tracks.fifosize" Type="1">16</Property>
+      <Property LongName="AB3DMOT_Tracker.tracks.periodic" Type="0">false</Property>
+    </Output>
+    <Output LongName="AB3DMOT_Tracker.num_tracks" Name="num_tracks">
+      <Property LongName="AB3DMOT_Tracker.num_tracks.subsampling" Type="1">1</Property>
+      <Property LongName="AB3DMOT_Tracker.num_tracks.fifosize" Type="1">16</Property>
+      <Property LongName="AB3DMOT_Tracker.num_tracks.periodic" Type="0">false</Property>
+    </Output>
+    <Output LongName="AB3DMOT_Tracker.track_ids" Name="track_ids">
+      <Property LongName="AB3DMOT_Tracker.track_ids.subsampling" Type="1">1</Property>
+      <Property LongName="AB3DMOT_Tracker.track_ids.fifosize" Type="1">16</Property>
+      <Property LongName="AB3DMOT_Tracker.track_ids.periodic" Type="0">false</Property>
+    </Output>
+    <Property LongName="AB3DMOT_Tracker.guard_begin" Type="0" SubType="128">true</Property>
+    <Property LongName="AB3DMOT_Tracker.internalInputs" Type="3" SubType="128"><![CDATA[detections;1==frame_idx;5==]]></Property>
+    <Property LongName="AB3DMOT_Tracker.internalOutputs" Type="3" SubType="128"><![CDATA[tracks;1==num_tracks;5==track_ids;1==]]></Property>
+    <Property LongName="AB3DMOT_Tracker.internalProperties" Type="3" SubType="128"><![CDATA[dataset;3==KITTI==det_name;3==pointrcnn==category;3==Car==ID_init;5==0==enable_ego_motion;0==false==verbose;0==false==]]></Property>
+    <ReadOnlyProperty LongName="AB3DMOT_Tracker.advance_begin_configuration" Type="3" SubType="256"><![CDATA[Advanced Configuration]]></ReadOnlyProperty>
+    <Property LongName="AB3DMOT_Tracker.deathBehavior" Type="4"><![CDATA[3|1|WAIT FOR PROCESS INDEFINITELY|KILL PROCESS AFTER TIMEOUT (5sec)|START ANOTHER PROCESS]]></Property>
+    <Property LongName="AB3DMOT_Tracker.capturePythonPrint" Type="0">true</Property>
+    <Property LongName="AB3DMOT_Tracker.useTCPOnly" Type="0">false</Property>
+    <Property LongName="AB3DMOT_Tracker.FileSHMSize" Type="1">15000000</Property>
+    <ReadOnlyProperty LongName="AB3DMOT_Tracker.advance_end_configuration" Type="0" SubType="512">false</ReadOnlyProperty>
+    <ReadOnlyProperty LongName="AB3DMOT_Tracker.basic_begin_configuration" Type="3" SubType="256"><![CDATA[Basic Configuration]]></ReadOnlyProperty>
+    <Property LongName="AB3DMOT_Tracker.className" Type="3"><![CDATA[rtmaps_python]]></Property>
+    <Property LongName="AB3DMOT_Tracker.pythonExecutable" Type="3" SubType="16"><![CDATA[]]></Property>
+    <Property LongName="AB3DMOT_Tracker.pythonFilename" Type="3" SubType="80"><![CDATA[C:/Users/sardo/Documents/EcoCAR/AB3DMOT/rtmaps_ab3dmot_tracker.py]]><Relative><![CDATA[%RTMAPS_DIAGRAMDIR%/rtmaps_ab3dmot_tracker.py]]></Relative></Property>
+    <Property LongName="AB3DMOT_Tracker.readingPolicy" Type="4"><![CDATA[5|1|Synchro|Reactive|Sampling|Triggered by First Input|Periodic Resampling Based on Timestamps]]></Property>
+    <Property LongName="AB3DMOT_Tracker.synchroTolerance" Type="1" SubType="1">0</Property>
+    <ReadOnlyProperty LongName="AB3DMOT_Tracker.basic_end_configuration" Type="0" SubType="512">true</ReadOnlyProperty>
+    <ReadOnlyProperty LongName="AB3DMOT_Tracker.userSubsection" Type="3" SubType="256"><![CDATA[User Properties]]></ReadOnlyProperty>
+    <Property LongName="AB3DMOT_Tracker.dataset" Type="3"><![CDATA[KITTI]]></Property>
+    <Property LongName="AB3DMOT_Tracker.det_name" Type="3"><![CDATA[pointrcnn]]></Property>
+    <Property LongName="AB3DMOT_Tracker.category" Type="3"><![CDATA[Car]]></Property>
+    <Property LongName="AB3DMOT_Tracker.ID_init" Type="1">0</Property>
+    <Property LongName="AB3DMOT_Tracker.enable_ego_motion" Type="0">false</Property>
+    <Property LongName="AB3DMOT_Tracker.verbose" Type="0">false</Property>
+    <Property LongName="AB3DMOT_Tracker.guard_end" Type="0" SubType="128">true</Property>
+    <ReadOnlyProperty LongName="AB3DMOT_Tracker.userSubsectionEnd" Type="0" SubType="512">true</ReadOnlyProperty>
+    <Property LongName="AB3DMOT_Tracker.threaded" Type="0">true</Property>
+    <Property LongName="AB3DMOT_Tracker.priority" Type="1">128</Property>
+    <Property LongName="AB3DMOT_Tracker.autoStart" Type="0">true</Property>
+  </Component>
+</RTMapsDiagram>
+
+
