@@ -71,3 +71,12 @@ python main.py --dataset KITTI --split val --det_name pointrcnn
 python main.py --dataset KITTI --split val --det_name pointrcnn --export_csv
 ```
 
+## Future Integration
+
+The repository is prepared for integration with BEVFusion 3D bounding box outputs, with the tracking component (`AB3DMOT_libs/model.py`) ready for isolation and modular use.
+
+## Comparison Links
+
+- **GitHub Comparison**: https://github.com/xinshuoweng/AB3DMOT/compare/master...Yeongie:AB3DMOT-csv-done:master
+- **Original Repository**: https://github.com/xinshuoweng/AB3DMOT
+- **Modified Repository**: https://github.com/Yeongie/AB3DMOT-csv-done
