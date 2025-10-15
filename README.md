@@ -1,15 +1,25 @@
 # AB3DMOT
-To read the original official AB3DMOT README.md visit https://github.com/xinshuoweng/AB3DMOT/blob/master/README.md
-Please also check HANDOVER_GUIDE.md and DEPENDANCY_COMPARISON.md
 
-Note: You need to visit https://www.cvlibs.net/datasets/kitti/eval_tracking.php and download the following datasets:
-data_tracking_calib.zip
-data_tracking_image_2.zip
-data_tracking_label_2.zip
-data_tracking_oxts.zip
-data_tracking_velodyne.zip
+## 📚 Documentation
+- **Original AB3DMOT README**: [https://github.com/xinshuoweng/AB3DMOT/blob/master/README.md](https://github.com/xinshuoweng/AB3DMOT/blob/master/README.md)
+- **Project Handover Guide**: `HANDOVER_GUIDE.md`
+- **Dependency Analysis**: `DEPENDENCY_COMPARISON.md`
 
-directory path will end up looking like this:
+## 📥 Dataset Download
+
+**Note**: You need to visit [KITTI Tracking Dataset](https://www.cvlibs.net/datasets/kitti/eval_tracking.php) and download the following datasets:
+
+- `data_tracking_calib.zip`
+- `data_tracking_image_2.zip`
+- `data_tracking_label_2.zip`
+- `data_tracking_oxts.zip`
+- `data_tracking_velodyne.zip`
+
+## 📁 Directory Structure
+
+After downloading and extracting, your directory structure should look like this:
+
+```
 data/KITTI/tracking/
 ├── training/
 │   ├── image_02/    # 0000/, 0001/, 0002/, ..., 0020/
@@ -22,6 +32,7 @@ data/KITTI/tracking/
     ├── velodyne/    # LiDAR point clouds
     ├── calib/       # Camera calibration
     └── oxts/        # GPS/IMU data
+```
 
 ## Installation
 

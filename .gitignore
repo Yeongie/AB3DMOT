@@ -1,5 +1,7 @@
-# Large data directories
-data/
+# Large data directories (keep structure, ignore contents)
+data/*/
+!data/*/.gitkeep
+!data/*/README.md
 results/
 *.h5
 *.hdf5
