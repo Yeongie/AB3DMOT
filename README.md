@@ -1,79 +1,151 @@
 # AB3DMOT
+To read the original official AB3DMOT README.md visit https://github.com/xinshuoweng/AB3DMOT/blob/master/README.md
+Please also check HANDOVER_GUIDE.md and DEPENDANCY_COMPARISON.md
 
-<b>3D Multi-Object Tracking: A Baseline and New Evaluation Metrics (IROS 2020, ECCVW 2020)</b>
+Note: You need to visit https://www.cvlibs.net/datasets/kitti/eval_tracking.php and download the following datasets:
+data_tracking_calib.zip
+data_tracking_image_2.zip
+data_tracking_label_2.zip
+data_tracking_oxts.zip
+data_tracking_velodyne.zip
 
-This repository contains the official python implementation for our full paper at IROS 2020 "[3D Multi-Object Tracking: A Baseline and New Evaluation Metrics](http://www.xinshuoweng.com/papers/AB3DMOT/proceeding.pdf)" and short paper "[AB3DMOT: A Baseline for 3D Multi-Object Tracking and New Evaluation Metrics](http://www.xinshuoweng.com/papers/AB3DMOT_eccvw/camera_ready.pdf)" at ECCVW 2020. Our project website and video demos are [here](http://www.xinshuoweng.com/projects/AB3DMOT/). If you find our paper or code useful, please cite our papers:
-
-```
-@article{Weng2020_AB3DMOT, 
-author = {Weng, Xinshuo and Wang, Jianren and Held, David and Kitani, Kris}, 
-journal = {IROS}, 
-title = {{3D Multi-Object Tracking: A Baseline and New Evaluation Metrics}}, 
-year = {2020} 
-}
-```
-```
-@article{Weng2020_AB3DMOT_eccvw, 
-author = {Weng, Xinshuo and Wang, Jianren and Held, David and Kitani, Kris}, 
-journal = {ECCVW}, 
-title = {{AB3DMOT: A Baseline for 3D Multi-Object Tracking and New Evaluation Metrics}}, 
-year = {2020} 
-}
-```
-
-<img align="center" width="100%" src="https://github.com/xinshuoweng/AB3DMOT/blob/master/main1.gif">
-<img align="center" width="100%" src="https://github.com/xinshuoweng/AB3DMOT/blob/master/main2.gif">
-
-## Overview
-
-- [News](#news)
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Quick Demo on KITTI](#quick-demo-on-kitti)
-- [Benchmarking](#benchmarking)
-- [Acknowledgement](#acknowledgement)
-
-## News
-
-- Feb. 27, 2022: Added support to the nuScenes dataset and updated README
-- Feb. 26, 2022: Refactored code libraries and signficantly improved performance on KITTI 3D MOT
-- Aug. 06, 2020: Extend abstract (one oral) accepted at two ECCV workshops: [WiCV](https://sites.google.com/view/wicvworkshop-eccv2020/), [PAD](https://sites.google.com/view/pad2020/accepted-papers?authuser=0)
-- Jul. 05, 2020: 2D MOT results on KITTI for all three categories released
-- Jul. 04, 2020: Code modularized and a minor bug in KITTI evaluation for DontCare objects fixed
-- Jun. 30, 2020: Paper accepted at IROS 2020
-- Jan. 10, 2020: New metrics sAMOTA added and results updated
-- Aug. 21, 2019: Python 3 supported
-- Aug. 21, 2019: 3D MOT results on KITTI "Pedestrian" and "Cyclist" categories released
-- Aug. 19, 2019: A minor bug in orientation correction fixed
-- Jul. 9, 2019: Code and 3D MOT results on KITTI "Car" category released, support Python 2 only
-
-## Introduction
-
-3D multi-object tracking (MOT) is an essential component technology for many real-time applications such as autonomous driving or assistive robotics. However, recent works for 3D MOT tend to focus more on developing accurate systems giving less regard to computational cost and system complexity. In contrast, this work proposes a simple yet accurate real-time baseline 3D MOT system. We use an off-the-shelf 3D object detector to obtain oriented 3D bounding boxes from the LiDAR point cloud. Then, a combination of 3D Kalman filter and Hungarian algorithm is used for state estimation and data association. Although our baseline system is a straightforward combination of standard methods, we obtain the state-of-the-art results. To evaluate our baseline system, we propose a new 3D MOT extension to the official KITTI 2D MOT evaluation along with two new metrics. Our proposed baseline method for 3D MOT establishes new state-of-the-art performance on 3D MOT for KITTI, improving the 3D MOTA from 72.23 of prior art to 76.47. Surprisingly, by projecting our 3D tracking results to the 2D image plane and compare against published 2D MOT methods, our system places 2nd on the official KITTI leaderboard. Also, our proposed 3D MOT method runs at a rate of 214.7 FPS, 65 times faster than the state-of-the-art 2D MOT system. 
+directory path will end up looking like this:
+data/KITTI/tracking/
+├── training/
+│   ├── image_02/    # 0000/, 0001/, 0002/, ..., 0020/
+│   ├── velodyne/    # LiDAR point clouds
+│   ├── calib/       # Camera calibration
+│   ├── label_02/    # Ground truth labels
+│   └── oxts/        # GPS/IMU data
+└── testing/
+    ├── image_02/    # Testing sequences
+    ├── velodyne/    # LiDAR point clouds
+    ├── calib/       # Camera calibration
+    └── oxts/        # GPS/IMU data
 
 ## Installation
 
 Please follow carefully our provided [installation instructions](docs/INSTALL.md), to avoid errors when running the code.
 
+#### Prerequisites
+- Windows 10/11 (current setup tested on Windows 10)
+- Python 3.6+ (tested with Python 3.8)
+- Git
+- RTMaps (if continuing RTMaps integration work)
+
+#### Environment Setup
+
+1. **Clone and Navigate to Project**
+   ```bash
+   git clone <repository-url>
+   cd AB3DMOT
+   ```
+
+2. **Create Virtual Environment**
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate  # Windows
+   # or: source venv/bin/activate  # Linux/Mac
+   ```
+
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Install Additional Dependencies for Video Processing**
+   ```bash
+   pip install scikit-video imageio imageio-ffmpeg
+   ```
+
+5. **Verify FFmpeg Installation**
+   ```bash
+   ffmpeg -version
+   ```
+   - If not installed, download from https://ffmpeg.org/download.html
+   - Add to system PATH
+
+#### Current Project Status
+
+**✅ Completed:**
+- AB3DMOT core tracking algorithm working
+- RTMaps integration component (`rtmaps_ab3dmot_tracker.py`) functional
+- Video visualization fixed (codec compatibility issue resolved)
+- Basic tracking pipeline operational
+
+**⚠️ Known Issues:**
+- RTMaps component uses simplified tracking fallback for stability
+
+**🔄 Next Steps:**
+1. Re-download KITTI/nuScenes datasets
+2. Test full AB3DMOT pipeline with real data
+3. Optimize RTMaps integration 
+4. Connect real sensor inputs to RTMaps component
+
+#### RTMaps Integration Files
+- `rtmaps_components/` - RTMaps Python components
+- `RTMAPS_INTEGRATION.md` - Detailed RTMaps setup guide
+- `CHANGES_SUMMARY.md` - Complete change log
+
+#### Quick Test
+```bash
+# Test basic functionality (requires data)
+python main.py --dataset KITTI --split val --det_name pointrcnn
+
+# Test visualization (after running tracking)
+python scripts/post_processing/visualization.py --result_sha pointrcnn_val_H1_thres --split val
+```
+
 ## Quick Demo on KITTI
 
 To quickly get a sense of our method's performance on the KITTI dataset, one can run the following command after installation of the code. This step does not require you to download any dataset (a small set of data is already included in this code repository).
 
+### Complete AB3DMOT Pipeline Commands
+
+#### 1. Run Tracking (Choose one based on your needs)
+
+**For validation set:**
+```bash
+python main.py --dataset KITTI --split val --det_name pointrcnn
 ```
-python3 main.py --dataset KITTI --split val --det_name pointrcnn
-python3 scripts/post_processing/trk_conf_threshold.py --dataset KITTI --result_sha pointrcnn_val_H1
-python3 scripts/post_processing/visualization.py --result_sha pointrcnn_val_H1_thres --split val
+
+**For test set:**
+```bash
+python main.py --dataset KITTI --split test --det_name pointrcnn
 ```
 
-## Benchmarking
+**With CSV export:**
+```bash
+python main.py --dataset KITTI --split val --det_name pointrcnn --export_csv
+```
 
-We provide instructions (inference, evaluation and visualization) for reproducing our method's performance on various supported datasets ([KITTI](docs/KITTI.md), [nuScenes](docs/nuScenes.md)) for benchmarking purposes. 
+#### 2. Apply Confidence Thresholding (validity of this is still in the air)
+```bash
+python scripts/post_processing/trk_conf_threshold.py --dataset KITTI --result_sha pointrcnn_val_H1
+```
 
-## Real-Time Tracking in ROS
+#### 3. Generate Visualization
+```bash
+# Create visualization images and videos
+python scripts/post_processing/visualization.py --result_sha pointrcnn_val_H1_thres --split val
+```
 
-Special thanks to Pardis for the development of the real-time version running in ROS. Code can be found [here](https://github.com/PardisTaghavi/real_time_tracking_AB3DMOT).
+**Note**: The visualization script will create both individual frame images and MP4 videos. If video generation fails due to ffmpeg codec issues, the images will still be created successfully.
 
-## Acknowledgement
+### Alternative Video Generation Options
 
-The idea of this method is inspired by "[SORT](https://github.com/abewley/sort)"
+#### Direct Video Processing Functions
+```python
+# Programmatic video generation
+from xinshuo_video import generate_video_from_folder
+generate_video_from_folder(image_folder, output_video, framerate=30)
+```
+
+### Note on video generation codecs (Windows/ffmpeg)
+
+The visualization script writes videos via ffmpeg. On some Windows builds, ffmpeg is compiled without `libx264`, which caused failures when encoding with `-vcodec libx264`. To improve compatibility, the default codec in `xinshuo_video/video_processing.py` has been switched to `mpeg4`.
+
+- If you have an ffmpeg build with x264 and prefer H.264, you can change `'-vcodec': 'mpeg4'` back to `'-vcodec': 'libx264'` in `xinshuo_video/video_processing.py`.
+- To check codec availability: run `ffmpeg -hide_banner -encoders | findstr /I 264`.
+
 

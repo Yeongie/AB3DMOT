@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Large data directories
 data/
 results/
@@ -15,17 +14,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
-=======
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
 
 # C extensions
 *.so
 
 # Distribution / packaging
->>>>>>> db256c58884a62119e764722299ebf494ae68407
 .Python
 build/
 develop-eggs/
@@ -39,12 +32,57 @@ parts/
 sdist/
 var/
 wheels/
-<<<<<<< HEAD
 pip-wheel-metadata/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
 
 # IDE files
 .vscode/
@@ -93,71 +131,6 @@ Thumbs.db
 logs/
 log/
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# pytest cache
-.pytest_cache/
-.coverage
-.tox/
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-=======
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
 # pyenv
 .python-version
 
@@ -188,7 +161,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-results/
+.dmypy.json
+dmypy.json
+
+# Deprecated files
 deprecated/
 tmp/*
->>>>>>> db256c58884a62119e764722299ebf494ae68407

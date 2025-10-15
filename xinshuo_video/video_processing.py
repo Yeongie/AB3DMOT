@@ -93,7 +93,8 @@ def generate_video_from_list(image_list, save_path, framerate=30, downsample=1, 
 		assert ispositiveinteger(framerate), 'the framerate is a positive integer'
 	mkdir_if_missing(save_path)
 	inputdict = {'-r': str(framerate)}
-	outputdict = {'-r': str(framerate), '-crf': '18', '-vcodec': 'libx264', '-profile:V': 'high', '-pix_fmt': 'yuv420p'}
+	# Use mpeg4 codec by default for broader compatibility on Windows builds without libx264
+	outputdict = {'-r': str(framerate), '-crf': '18', '-vcodec': 'mpeg4', '-pix_fmt': 'yuv420p'}
 	video_writer = FFmpegWriter(save_path, inputdict=inputdict, outputdict=outputdict)
 	count = 1
 	num_images = len(image_list)
