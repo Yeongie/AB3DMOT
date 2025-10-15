@@ -118,8 +118,6 @@ ffmpeg -version
 | 3.8 | 8.4.0 | 4.2.0.32 | ✅ Tested |
 | 3.9+ | 8.4.0 | 4.2.0.32 | ⚠️ Untested |
 
-## Recommendations for Team Member
-
 ### ✅ **DO NOT CHANGE**
 - Keep all core AB3DMOT dependencies at exact versions
 - Maintain Pillow >= 8.3.2 for security
@@ -129,11 +127,6 @@ ffmpeg -version
 - NumPy version (currently 1.19.5) - newer versions may break numba
 - Python version - stick to 3.6-3.8 for best compatibility
 - FFmpeg builds - ensure mpeg4 codec is available
-
-### 🆕 **CAN ADD**
-- Additional visualization packages
-- Development tools (pytest, black, etc.)
-- Documentation tools (sphinx, etc.)
 
 ## Troubleshooting Common Issues
 
