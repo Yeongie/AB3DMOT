@@ -67,7 +67,7 @@ imageio-ffmpeg
 ### Setup Commands
 ```bash
 # 1. Clone repository
-git clone <repository-url>
+git clone https://github.com/Yeongie/AB3DMOT.git
 cd AB3DMOT
 
 # 2. Create virtual environment

@@ -2,7 +2,7 @@
 
 First of all, clone the code:
 ~~~shell
-git clone https://github.com/xinshuoweng/AB3DMOT.git
+git clone https://github.com/Yeongie/AB3DMOT.git
 ~~~
 
 ## System Requirements

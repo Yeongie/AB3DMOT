@@ -73,20 +73,6 @@ python main.py --dataset KITTI --split val --det_name pointrcnn --export_csv
 
 ## RTMaps Integration
 
-### 🚀 RTMaps Component Integration (NEW)
-- **Complete RTMaps Integration**: Full AB3DMOT tracking component for RTMaps environment
-- **Production-Ready Component**: `rtmaps_components/rtmaps_ab3dmot_tracker.py`
-- **Stable Operation**: Tested for 7,000+ frames without crashes
-- **Real-time Processing**: Handles sensor inputs and outputs tracking results
-- **Comprehensive Documentation**: Complete setup and usage guides
-
-#### RTMaps Component Features:
-- ✅ Input parsing for various detection formats
-- ✅ Simple tracking fallback for stable operation  
-- ✅ Memory management and garbage collection
-- ✅ Robust error handling and recovery
-- ✅ Output limiting to prevent buffer overflow
-- ✅ Comprehensive logging for debugging
 
 #### RTMaps Integration Files:
 - `rtmaps_components/rtmaps_ab3dmot_tracker.py` - Main tracking component
@@ -101,6 +87,6 @@ The repository is prepared for integration with BEVFusion 3D bounding box output
 
 ## Comparison Links
 
-- **GitHub Comparison**: https://github.com/xinshuoweng/AB3DMOT/compare/master...Yeongie:AB3DMOT-csv-done:master
+- **GitHub Comparison**: https://github.com/xinshuoweng/AB3DMOT/compare/master...Yeongie:AB3DMOT:master
 - **Original Repository**: https://github.com/xinshuoweng/AB3DMOT
-- **Modified Repository**: https://github.com/Yeongie/AB3DMOT-csv-done
+- **Modified Repository**: https://github.com/Yeongie/AB3DMOT
